@@ -8,7 +8,7 @@
     tools:context="com.codegreed_devs.driveit.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <!--<com.google.android.gms.maps.MapView-->
+    <!--<com.google.android.gms.maps.MapViewyh-->
         <!--android:id="@+id/mapView"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"/>-->
