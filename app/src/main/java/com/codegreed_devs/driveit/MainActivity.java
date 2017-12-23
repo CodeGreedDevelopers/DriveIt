@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,8 +25,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
-    MapView mapView;
-    GoogleMap mgoogleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +42,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
         //getting the map view
-        mapView=(MapView)findViewById(R.id.mapView);
-        mapView.onCreate(null);
-        mapView.onResume();
-        mapView.getMapAsync(this);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapV);
+        mapFragment.getMapAsync(this);
 
 
 
@@ -119,13 +116,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        MapsInitializer.initialize(MainActivity.this);
-        mgoogleMap=googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        googleMap.getUiSettings().setAllGesturesEnabled(true);
-        googleMap.getUiSettings().isZoomControlsEnabled();
-        googleMap.getUiSettings().setMapToolbarEnabled(true);
-        LatLng latLng=new LatLng(-1.089040,37.010450);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(new LatLng(37.4219999,-122.0862462))
+                .zoom(16)
+                .bearing(0)
+                .tilt(45)
+                .build();
+
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(googlePlex));
     }
 }

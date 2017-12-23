@@ -8,8 +8,14 @@
     tools:context="com.codegreed_devs.driveit.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+    <!--<com.google.android.gms.maps.MapView-->
+        <!--android:id="@+id/mapView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+    <fragment
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/mapV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </android.support.v7.widget.ContentFrameLayout>
