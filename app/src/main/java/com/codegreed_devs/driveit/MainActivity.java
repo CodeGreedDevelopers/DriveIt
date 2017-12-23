@@ -23,8 +23,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 ;
@@ -33,6 +36,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback,LocationListener{
     GoogleMap mMap;
+    Marker melbourne;
+    LatLng latLng;
     private static final int PERMISSION_LOCATION_REQUEST_CODE = 0;
 
     @Override
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         //getting the map view
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapV);
         mapFragment.getMapAsync(this);
+
 
 
 
@@ -135,7 +141,8 @@ public class MainActivity extends AppCompatActivity
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
-        mMap.addMarker(new MarkerOptions().position(jkuat).title("Marker Jkuat"));
+
+//        mMap.addMarker(new MarkerOptions().position(jkuat).title("Marker Jkuat"));
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -155,7 +162,17 @@ public class MainActivity extends AppCompatActivity
         Location location = locationManager.getLastKnownLocation(provider);
 
         if(location!=null){
+//            melbourne.remove();
             onLocationChanged(location);
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLng)      // Sets the center of the map to Mountain View
+                    .zoom(10)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .tilt(90)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
         }
         locationManager.requestLocationUpdates(provider, 20000, 0, this);
     }
@@ -168,13 +185,22 @@ public class MainActivity extends AppCompatActivity
         double longitude = location.getLongitude();
 
         // Creating a LatLng object for the current location
-        LatLng latLng = new LatLng(latitude, longitude);
-
+        latLng = new LatLng(latitude, longitude);
         // Showing the current location in Google Map
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
+        if (melbourne != null) {
+            melbourne.remove();
+        }
+
         // Zoom in the Google Map
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        melbourne = mMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Your Current Location")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)));
+
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+//        mMap.
     }
 
     @Override
