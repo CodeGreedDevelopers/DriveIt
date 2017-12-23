@@ -13,12 +13,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
     MapView mapView;
+    GoogleMap mgoogleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +42,13 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-        //getiing the mapview
+        //getting the map view
         mapView=(MapView)findViewById(R.id.mapView);
+        mapView.onCreate(null);
+        mapView.onResume();
+        mapView.getMapAsync(this);
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -103,5 +115,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(MainActivity.this);
+        mgoogleMap=googleMap;
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        googleMap.getUiSettings().setAllGesturesEnabled(true);
+        googleMap.getUiSettings().isZoomControlsEnabled();
+        googleMap.getUiSettings().setMapToolbarEnabled(true);
+        LatLng latLng=new LatLng(-1.089040,37.010450);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 }
