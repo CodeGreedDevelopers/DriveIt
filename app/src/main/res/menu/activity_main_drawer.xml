@@ -25,7 +25,7 @@
     <item android:title="Others">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_terms_conditions"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Terms &amp; Conditions" />
             <item
