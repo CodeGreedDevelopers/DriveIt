@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
+import de.psdev.licensesdialog.LicensesDialog;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
@@ -51,8 +52,7 @@ public class MainActivity extends AppCompatActivity
     LatLng latLng;
     Toolbar toolbar;
     ImageView user_dp;
-    String display_name;
-    String display_email;
+    String display_name,display_email;
     Uri profile_url;
     TextView user_name,user_email;
     private static final int PERMISSION_LOCATION_REQUEST_CODE = 0;
@@ -173,9 +173,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            Intent my_account=new Intent(MainActivity.this,MyAccountActivity.class);
+            startActivity(my_account);
 
         } else if (id == R.id.nav_share) {
-
+                terms_conditions();
         } else if (id == R.id.nav_send) {
             SignOut();
 
@@ -185,6 +187,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void terms_conditions(){
+        new LicensesDialog.Builder(this)
+                .setNotices(R.raw.notices)
+                .build()
+                .show();
     }
     public void SignOut(){
         AuthUI.getInstance().signOut(this)

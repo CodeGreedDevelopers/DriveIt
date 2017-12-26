@@ -16,6 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/raw'] } }
 }
 
 dependencies {
@@ -30,6 +31,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui:3.1.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'jp.wasabeef:picasso-transformations:2.1.0'
+    implementation 'de.psdev.licensesdialog:licensesdialog:1.8.3'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

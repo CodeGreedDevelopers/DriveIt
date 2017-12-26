@@ -10,5 +10,9 @@
     <string name="usr_name">User name</string>
     <string name="usr_email">Email</string>
     <string name="usr_image_desc">User profile image</string>
+    <string name="usr_phone">Phone</string>
     <string name="maps_api_key">AIzaSyCDn3j_1ACurLAIrWCCRLEvlSsOHO3T2MY</string>
+    <string name="add_name">Add name</string>
+    <string name="add_eamil">Add email address</string>
+    <string name="add_phone">Add mobile number</string>
 </resources>

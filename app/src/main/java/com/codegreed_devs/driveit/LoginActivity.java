@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity {
     private int SIGN_IN_REQUEST_CODE=10;
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
                         .build(),
                 SIGN_IN_REQUEST_CODE
         );
+        
 
     }
     @Override
