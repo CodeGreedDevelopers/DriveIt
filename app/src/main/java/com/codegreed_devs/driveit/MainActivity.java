@@ -25,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -41,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import de.psdev.licensesdialog.LicensesDialog;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     Marker melbourne;
     LatLng latLng;
     Toolbar toolbar;
-    ImageView user_dp;
+    CircleImageView user_dp;
     String display_name,display_email;
     Uri profile_url;
     TextView user_name,user_email;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         View navView=navigationView.getHeaderView(0);
         user_name= navView.findViewById(R.id.user_name);
         user_email= navView.findViewById(R.id.user_email);
-        user_dp= navView.findViewById(R.id.imageView);
+        user_dp= navView.findViewById(R.id.user_dp);
 
         //setting views
         user_name.setText(display_name);
@@ -111,13 +111,13 @@ public class MainActivity extends AppCompatActivity
                     .transform(new CropCircleTransformation())
                     .resize(128, 128)
                     .centerCrop()
-                    .placeholder(R.drawable.ic_account)
+                    .placeholder(R.drawable.avatar)
                     .into(user_dp);
 
         }else {
             Picasso
                     .with(getBaseContext())
-                    .load(R.drawable.ic_account)
+                    .load(R.drawable.avatar)
                     .transform(new CropCircleTransformation())
                     .resize(128, 128)
                     .centerCrop()
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -166,11 +167,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.nav_top_cars) {
+            Intent top_cars=new Intent(MainActivity.this,TopCarsActivity.class);
+            startActivity(top_cars);
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_camera) {
 
         } else if (id == R.id.nav_manage) {
             Intent my_account=new Intent(MainActivity.this,MyAccountActivity.class);
@@ -195,21 +197,13 @@ public class MainActivity extends AppCompatActivity
                 .show();
     }
     public void SignOut(){
-        AuthUI.getInstance().signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(MainActivity.this,
-                                "You have been signed out.",
-                                Toast.LENGTH_LONG)
-                                .show();
+        FirebaseAuth.getInstance().signOut();
 
-                        // Return to sign in
-                        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+        // Return to sign in
+        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+
 
     }
 
@@ -284,6 +278,17 @@ public class MainActivity extends AppCompatActivity
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 //        mMap.
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent refresh=getIntent();
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(refresh);
+        overridePendingTransition(0,0);
     }
 
     @Override

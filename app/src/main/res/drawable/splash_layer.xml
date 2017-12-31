@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
  <item android:drawable="@color/colorPrimary"/>
     <item>
-        <bitmap android:src="@drawable/ic_account"
+        <bitmap android:src="@drawable/avatar"
             android:gravity="center">
 
         </bitmap>
