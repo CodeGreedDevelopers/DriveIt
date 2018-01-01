@@ -5,27 +5,36 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_top_cars"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Top Cars" />
+        <item
+            android:id="@+id/nav_companies"
             android:icon="@drawable/ic_menu_camera"
-            android:title="My Wishlist" />
+            android:title="Companies" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Chauffeurs" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="My Wishlist" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_other_cars"
             android:icon="@drawable/ic_account"
-            android:title="My Account" />
+            android:title="Other Vehicles" />
+
     </group>
 
     <item android:title="Others">
         <menu>
             <item
-                android:id="@+id/nav_terms_conditions"
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_account"
+                android:title="My Account" />
+            <item
+                android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Terms &amp; Conditions" />
             <item

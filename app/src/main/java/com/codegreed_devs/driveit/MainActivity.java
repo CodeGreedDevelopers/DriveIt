@@ -6,6 +6,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -24,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -37,6 +37,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import de.psdev.licensesdialog.LicensesDialog;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class MainActivity extends AppCompatActivity
@@ -45,7 +51,9 @@ public class MainActivity extends AppCompatActivity
     Marker melbourne;
     LatLng latLng;
     Toolbar toolbar;
-    ImageView user_dp;
+    CircleImageView user_dp;
+    String display_name,display_email;
+    Uri profile_url;
     TextView user_name,user_email;
     private static final int PERMISSION_LOCATION_REQUEST_CODE = 0;
 
@@ -56,12 +64,9 @@ public class MainActivity extends AppCompatActivity
 
         //finding views
         toolbar = findViewById(R.id.toolbar);
-        user_dp= findViewById(R.id.imageView);
-        user_name= findViewById(R.id.user_name);
-        user_email= findViewById(R.id.user_email);
+
 
         setSupportActionBar(toolbar);
-
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +81,11 @@ public class MainActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
 
 
+        //Get user info
+        display_name= FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        display_email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        profile_url= FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl();
+
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -86,6 +96,36 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View navView=navigationView.getHeaderView(0);
+        user_name= navView.findViewById(R.id.user_name);
+        user_email= navView.findViewById(R.id.user_email);
+        user_dp= navView.findViewById(R.id.user_dp);
+
+        //setting views
+        user_name.setText(display_name);
+        user_email.setText(display_email);
+        if (profile_url != null) {
+            Picasso
+                    .with(getBaseContext())
+                    .load(profile_url)
+                    .transform(new CropCircleTransformation())
+                    .resize(128, 128)
+                    .centerCrop()
+                    .placeholder(R.drawable.avatar)
+                    .into(user_dp);
+
+        }else {
+            Picasso
+                    .with(getBaseContext())
+                    .load(R.drawable.avatar)
+                    .transform(new CropCircleTransformation())
+                    .resize(128, 128)
+                    .centerCrop()
+                    .into(user_dp);
+
+            //Else It will display the default dp
+        }
+
     }
 
     @Override
@@ -95,6 +135,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -126,16 +167,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.nav_top_cars) {
+            Intent top_cars=new Intent(MainActivity.this,TopCarsActivity.class);
+            startActivity(top_cars);
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_camera) {
 
         } else if (id == R.id.nav_manage) {
+            Intent my_account=new Intent(MainActivity.this,MyAccountActivity.class);
+            startActivity(my_account);
 
         } else if (id == R.id.nav_share) {
-
+                terms_conditions();
         } else if (id == R.id.nav_send) {
             SignOut();
 
@@ -146,22 +190,20 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void terms_conditions(){
+        new LicensesDialog.Builder(this)
+                .setNotices(R.raw.notices)
+                .build()
+                .show();
+    }
     public void SignOut(){
-        AuthUI.getInstance().signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(MainActivity.this,
-                                "You have been signed out.",
-                                Toast.LENGTH_LONG)
-                                .show();
+        FirebaseAuth.getInstance().signOut();
 
-                        // Return to sign in
-                        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+        // Return to sign in
+        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+
 
     }
 
@@ -202,8 +244,8 @@ public class MainActivity extends AppCompatActivity
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLng)      // Sets the center of the map to Mountain View
                     .zoom(12)                   // Sets the zoom
-                    .bearing(90)                // Sets the orientation of the camera to east
-                    .tilt(90)                   // Sets the tilt of the camera to 30 degrees
+                    .bearing(45)                // Sets the orientation of the camera to east
+                    .tilt(45)                   // Sets the tilt of the camera to 30 degrees
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -236,6 +278,17 @@ public class MainActivity extends AppCompatActivity
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 //        mMap.
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent refresh=getIntent();
+        finish();
+        overridePendingTransition(0,0);
+        startActivity(refresh);
+        overridePendingTransition(0,0);
     }
 
     @Override
