@@ -17,13 +17,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "LoginActivity";
+public class Login extends AppCompatActivity {
+    private static final String TAG = "Login";
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mAuth;
 
@@ -56,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Signup.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
@@ -76,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(Login.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
@@ -137,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // disable going back to the MainActivity
-        moveTaskToBack(true);
+        super.onBackPressed();
         finish();
     }
 
@@ -186,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser!=null){
-            Intent intent= new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent= new Intent(Login.this, MainActivity.class);
             startActivity(intent);
             finish();
 

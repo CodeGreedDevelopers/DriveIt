@@ -29,7 +29,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class MyAccountActivity extends AppCompatActivity {
+public class MyAccount extends AppCompatActivity {
     TextView top_name,name,phone,email;
     String display_name,display_email;
     String display_phone="";
@@ -192,17 +192,17 @@ public class MyAccountActivity extends AppCompatActivity {
                         String edt_name=edt.getText().toString();
                         if (edt_name.isEmpty()){
                             b.dismiss();
-                            new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            new SweetAlertDialog(MyAccount.this, SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Error")
                                     .setContentText("Username can't be empty!")
                                     .show();
                         }else if(edt_name.equals(display_name)){
                             b.dismiss();
-                            new SweetAlertDialog(MyAccountActivity.this)
+                            new SweetAlertDialog(MyAccount.this)
                                     .setTitleText("No changes made")
                                     .show();
                         }else{
-                            pDialog = new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                            pDialog = new SweetAlertDialog(MyAccount.this, SweetAlertDialog.PROGRESS_TYPE);
                             pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                             pDialog.setTitleText("Updating");
                             pDialog.setCancelable(false);
@@ -249,7 +249,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
                             phone.setText(edt_phone);
                             b.dismiss();
-                            pDialog = new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                            pDialog = new SweetAlertDialog(MyAccount.this, SweetAlertDialog.PROGRESS_TYPE);
                             pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                             pDialog.setTitleText("Updating");
                             pDialog.setCancelable(false);
@@ -291,7 +291,7 @@ public class MyAccountActivity extends AppCompatActivity {
                         String edt_email=edt.getText().toString();
                             UpdateEmail(edt_email);
                         b.dismiss();
-                        pDialog = new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                        pDialog = new SweetAlertDialog(MyAccount.this, SweetAlertDialog.PROGRESS_TYPE);
                         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                         pDialog.setTitleText("Updating");
                         pDialog.setCancelable(false);
@@ -320,9 +320,9 @@ public class MyAccountActivity extends AppCompatActivity {
                             DisplayInfo();
 
                             pDialog.dismiss();
-                            new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                            new SweetAlertDialog(MyAccount.this, SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Success")
-                                    .setContentText("Name updated")
+                                    .setContentText("Namwe updated")
                                     .setConfirmText("Ok")
                                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                         @Override
@@ -340,7 +340,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
                         }else {
                             pDialog.dismiss();
-                            new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            new SweetAlertDialog(MyAccount.this, SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Error")
                                     .setContentText("Something went wrong!")
                                     .show();
@@ -353,7 +353,7 @@ public class MyAccountActivity extends AppCompatActivity {
     }
     public void UpdatePhone(String new_phone){
         pDialog.dismiss();
-        new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.NORMAL_TYPE)
+        new SweetAlertDialog(MyAccount.this, SweetAlertDialog.NORMAL_TYPE)
                 .setTitleText("In progress")
                 .setContentText("This feature is still in development\uD83D\uDE0A")
                 .setConfirmText("Ok")
@@ -373,7 +373,7 @@ public class MyAccountActivity extends AppCompatActivity {
                             DisplayInfo();
                             pDialog.dismiss();
 
-                            new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.WARNING_TYPE)
+                            new SweetAlertDialog(MyAccount.this, SweetAlertDialog.SUCCESS_TYPE)
                                     .setTitleText("Success")
                                     .setContentText("Check your email to activate your new email address")
                                     .setConfirmText("Ok")
@@ -388,7 +388,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
                         }else {
                             pDialog.dismiss();
-                            new SweetAlertDialog(MyAccountActivity.this, SweetAlertDialog.ERROR_TYPE)
+                            new SweetAlertDialog(MyAccount.this, SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Error")
                                     .setContentText("Something went wrong!")
                                     .show();
@@ -403,7 +403,7 @@ public class MyAccountActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
 
         // Return to sign in
-        Intent intent=new Intent(MyAccountActivity.this,LoginActivity.class);
+        Intent intent=new Intent(MyAccount.this,Login.class);
         startActivity(intent);
         finish();
 

@@ -14,7 +14,7 @@ import com.ToxicBakery.viewpager.transforms.DepthPageTransformer;
 import com.ToxicBakery.viewpager.transforms.RotateDownTransformer;
 
 
-public class TopCarsActivity extends AppCompatActivity {
+public class TopCars extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */

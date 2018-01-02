@@ -8,7 +8,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -21,9 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,8 +32,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -168,14 +163,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_top_cars) {
-            Intent top_cars=new Intent(MainActivity.this,TopCarsActivity.class);
+            Intent top_cars=new Intent(MainActivity.this,TopCars.class);
             startActivity(top_cars);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_camera) {
 
         } else if (id == R.id.nav_manage) {
-            Intent my_account=new Intent(MainActivity.this,MyAccountActivity.class);
+            Intent my_account=new Intent(MainActivity.this,MyAccount.class);
             startActivity(my_account);
 
         } else if (id == R.id.nav_share) {
@@ -200,7 +195,7 @@ public class MainActivity extends AppCompatActivity
         FirebaseAuth.getInstance().signOut();
 
         // Return to sign in
-        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+        Intent intent=new Intent(MainActivity.this,Login.class);
         startActivity(intent);
         finish();
 
