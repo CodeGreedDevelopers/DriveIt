@@ -19,10 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
-public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
+public class Signup extends AppCompatActivity {
+    private static final String TAG = "Signup";
     EditText _nameText,_emailText,_passwordText;
     Button _signupButton;
     TextView _loginLink;
@@ -68,7 +66,7 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(Signup.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
@@ -172,7 +170,7 @@ public class SignupActivity extends AppCompatActivity {
     }
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser!=null){
-            Intent intent= new Intent(SignupActivity.this, MainActivity.class);
+            Intent intent= new Intent(Signup.this, MainActivity.class);
             startActivity(intent);
 
         }else{

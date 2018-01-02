@@ -3,14 +3,13 @@ package com.codegreed_devs.driveit;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class Splash extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     @Override
@@ -23,21 +22,16 @@ public class SplashActivity extends AppCompatActivity {
 
             i++;
         }
-        Intent intent=new Intent(this,LoginActivity.class);
-        startActivity(intent);
-
-        //initialize toasty
-
 
     }
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser!=null){
-            Intent intent= new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent= new Intent(Splash.this, MainActivity.class);
             startActivity(intent);
             finish();
 
         }else{
-            Intent intent= new Intent(SplashActivity.this, LoginActivity.class);
+            Intent intent= new Intent(Splash.this, Login.class);
             startActivity(intent);
             finish();
 
