@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 public class Splash extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
@@ -19,28 +18,21 @@ public class Splash extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         int i=0;
         while (i<3000) {
-
             i++;
         }
-
     }
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser!=null){
             Intent intent= new Intent(Splash.this, MainActivity.class);
             startActivity(intent);
             finish();
-
         }else{
             Intent intent= new Intent(Splash.this, Login.class);
             startActivity(intent);
             finish();
-
-
-
         }
-
-
     }
+
     @Override
     public void onStart() {
         super.onStart();

@@ -177,8 +177,6 @@ public class MainActivity extends AppCompatActivity
                 terms_conditions();
         } else if (id == R.id.nav_send) {
             SignOut();
-
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -193,7 +191,6 @@ public class MainActivity extends AppCompatActivity
     }
     public void SignOut(){
         FirebaseAuth.getInstance().signOut();
-
         // Return to sign in
         Intent intent=new Intent(MainActivity.this,Login.class);
         startActivity(intent);

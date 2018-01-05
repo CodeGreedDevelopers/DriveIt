@@ -4,7 +4,6 @@
     <item>
         <bitmap android:src="@drawable/avatar"
             android:gravity="center">
-
         </bitmap>
     </item>
 </layer-list>
